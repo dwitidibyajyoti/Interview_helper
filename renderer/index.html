@@ -14,15 +14,15 @@
             color: #e0e0e0;
         }
 
-        #drag-region {
+        /* #drag-region {
             height: 30px;
             width: 30px;
             -webkit-app-region: drag;
             background: rgba(255, 255, 255, 0.05);
-        }
+        } */
 
         #response-wrapper {
-            height: calc(100% - 30px);
+            height: calc(100% - 70px);
             box-sizing: border-box;
             padding: 20px;
             overflow-y: auto;
@@ -51,14 +51,153 @@
         ::-webkit-scrollbar-track {
             background: transparent;
         }
+
+        .button-group {
+            margin-bottom: 10px;
+            margin-left: 5px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #fff;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Default state */
+        .btn-toggle-on {
+            background-color: rgba(220, 20, 60, 0.8);
+            /* Red-ish */
+        }
+
+        .btn-toggle-off {
+            background-color: rgba(34, 139, 34, 0.8);
+            /* Green-ish */
+        }
+
+        .btn-switch-system {
+            background-color: rgba(30, 144, 255, 0.8);
+            /* Dodger Blue */
+        }
+
+        .btn-switch-mic {
+            background-color: rgba(255, 165, 0, 0.8);
+            /* Orange */
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        #drag-region {
+            -webkit-app-region: drag;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 32px;
+            padding: 0 10px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .drag-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drag-icon {
+            font-size: 18px;
+            cursor: move;
+        }
+
+        .drag-right button {
+            -webkit-app-region: no-drag;
+            margin-left: 8px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .drag-right button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
     </style>
 </head>
 
 <body>
-    <div id="drag-region"></div>
+    <div id="drag-region">
+        <div class="drag-left">
+            <span class="drag-icon">⠿</span>
+            <span>Interview Helper</span>
+        </div>
+        <div class="drag-right">
+            <button id="min-btn">—</button>
+            <button id="close-btn">×</button>
+        </div>
+    </div>
     <div id="response-wrapper"></div>
+    <div class="button-group">
+        <button id="toggle-stream" class="btn btn-toggle-on">🎤 Stop Listening</button>
+        <button id="switch-source" class="btn btn-switch-system">🎧 Use Microphone</button>
+    </div>
 
     <script>
+        const toggleBtn = document.getElementById('toggle-stream');
+        const switchBtn = document.getElementById('switch-source');
+
+        let isListening = true;
+        let useSystemAudio = true;
+
+        document.getElementById('min-btn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+
+        document.getElementById('close-btn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+        toggleBtn.addEventListener('click', () => {
+            isListening = !isListening;
+
+            toggleBtn.innerText = isListening ? '🎤 Stop Listening' : '▶️ Start Listening';
+            toggleBtn.classList.toggle('btn-toggle-on', isListening);
+            toggleBtn.classList.toggle('btn-toggle-off', !isListening);
+            window.electronAPI.toggleListening();
+        });
+
+        switchBtn.addEventListener('click', () => {
+
+            if (!isListening) {
+                alert('Please start listening first!');
+                return;
+            }
+            useSystemAudio = !useSystemAudio;
+
+            switchBtn.innerText = useSystemAudio ? '🎧 Use Microphone' : '🔄 Use System Audio';
+            switchBtn.classList.toggle('btn-switch-system', !useSystemAudio);
+            switchBtn.classList.toggle('btn-switch-mic', useSystemAudio);
+            window.electronAPI.switchAudioSource();
+        });
+
+
+
         const responseWrapper = document.getElementById('response-wrapper');
 
         window.electronAPI.onChatGPTResponse((event, response) => {
