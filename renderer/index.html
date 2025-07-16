@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            background: rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+        }
+
+        #drag-region {
+            height: 30px;
+            width: 30px;
+            -webkit-app-region: drag;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        #response-wrapper {
+            height: calc(100% - 30px);
+            box-sizing: border-box;
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-app-region: no-drag;
+        }
+
+        .response-block {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="drag-region"></div>
+    <div id="response-wrapper"></div>
+
+    <script>
+        const responseWrapper = document.getElementById('response-wrapper');
+
+        window.electronAPI.onChatGPTResponse((event, response) => {
+            const div = document.createElement('div');
+            div.className = 'response-block';
+            div.innerText = response;
+            responseWrapper.appendChild(div);
+            responseWrapper.scrollTop = responseWrapper.scrollHeight;
+        });
+    </script>
+</body>
+
+</html>
