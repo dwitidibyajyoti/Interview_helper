@@ -56,7 +56,7 @@ async function startStreaming(callback, useSystemAudio = true) {
     }
 
     let audioBuffer = [];
-    const SEND_INTERVAL = 1000;
+    const SEND_INTERVAL = 700;
 
     // const fs = require('fs');
     // const file = fs.createWriteStream('test78.raw');

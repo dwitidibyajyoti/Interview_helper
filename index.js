@@ -35,7 +35,7 @@ function startStream() {
     startStreaming(async (transcript, isFinal) => {
         if (isFinal) {
             const response = await getChatGPTResponse(transcript);
-            console.log('💬 ChatGPT Response:', response);
+            // console.log('💬 ChatGPT Response:', response);
             win.webContents.send('chatgpt-response', response);
         }
     }, useSystemAudio); // pass the flag to transcribe.js
