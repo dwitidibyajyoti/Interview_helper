@@ -1,33 +1,14 @@
-"use client";
+// app/page.tsx
 
-import { useState } from "react";
+import ModalWrapper from "./components/modal-wrapper";
 
-export default function Home() {
-  const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [price, setPrice] = useState("");
-  const [currency, setCurrency] = useState("USD");
-  const [message, setMessage] = useState("");
+interface HomePageProps {
+  searchParams: Promise<{ modal?: string }>;
+}
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-    setMessage("Submitting...");
-
-    const res = await fetch("/api/interest", {
-      method: "POST",
-      body: JSON.stringify({ email, price, currency }),
-    });
-
-    if (res.ok) {
-      setMessage("Thank you! You’re now on the early-access list.");
-      setEmail("");
-      setPrice("");
-      setCurrency("USD");
-      setTimeout(() => setOpen(false), 1500);
-    } else {
-      setMessage("Something went wrong. Try again.");
-    }
-  }
+export default async function Home({ searchParams }: HomePageProps) {
+  const { modal } = await searchParams;
+  const showModal = modal === "true";
 
   return (
     <div className="min-h-screen bg-[#0d1117] text-white">
@@ -37,12 +18,15 @@ export default function Home() {
           HiddenHelper
         </h1>
 
-        <button
-          onClick={() => setOpen(true)}
-          className="px-4 py-2 bg-[#00ff9d] text-black font-semibold rounded-lg hover:opacity-90 transition"
-        >
-          Register Interest
-        </button>
+        <form action="/" method="get">
+          <input type="hidden" name="modal" value="true" />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-[#00ff9d] text-black font-semibold rounded-lg hover:opacity-90 transition"
+          >
+            Register Interest
+          </button>
+        </form>
       </header>
 
       {/* HERO */}
@@ -61,12 +45,15 @@ export default function Home() {
           could be embarrassing, unprofessional, or against the rules.
         </p>
 
-        <button
-          onClick={() => setOpen(true)}
-          className="mt-8 px-8 py-4 bg-[#00ff9d] text-black font-semibold text-lg rounded-xl hover:opacity-90 transition shadow-[0_0_20px_#00ff9d50]"
-        >
-          Join Early Access
-        </button>
+        <form action="/" method="get">
+          <input type="hidden" name="modal" value="true" />
+          <button
+            type="submit"
+            className="hover:cursor-pointer mt-8 px-8 py-4 bg-[#00ff9d] text-black font-semibold text-lg rounded-xl hover:opacity-90 transition shadow-[0_0_20px_#00ff9d50] "
+          >
+            Join Early Access
+          </button>
+        </form>
 
         <p className="mt-3 text-sm text-gray-500">
           Global launch · Works on Windows, macOS & Linux
@@ -82,8 +69,8 @@ export default function Home() {
           HiddenHelper is a lightweight AI coding assistant that sits beside
           your editor (VS Code, JetBrains, Cursor, Neovim, terminal, etc.) and
           provides intelligent help — without ever appearing on screen share.
-          It’s built for real-world developer workflows, where you might need AI
-          assistance but don’t want others to see prompts, completions, or tool
+          It's built for real-world developer workflows, where you might need AI
+          assistance but don't want others to see prompts, completions, or tool
           windows.
           <br /><br />
           Whether you're interviewing, presenting, teaching, pair-programming,
@@ -102,7 +89,7 @@ export default function Home() {
           <FeatureCard
             title="Invisible During Screen Share"
             accent="#00ff9d"
-            description="HiddenHelper’s window cannot be captured by Zoom, Google Meet, Teams, Discord, OBS, or OS-level share APIs."
+            description="HiddenHelper's window cannot be captured by Zoom, Google Meet, Teams, Discord, OBS, or OS-level share APIs."
           />
 
           <FeatureCard
@@ -155,12 +142,15 @@ export default function Home() {
 
       {/* CTA */}
       <section className="py-16 text-center">
-        <button
-          onClick={() => setOpen(true)}
-          className="px-8 py-4 bg-[#00ff9d] text-black text-lg font-semibold rounded-xl hover:opacity-90 transition shadow-[0_0_25px_#00ff9d70]"
-        >
-          Register Interest for Global Launch
-        </button>
+        <form action="/" method="get">
+          <input type="hidden" name="modal" value="true" />
+          <button
+            type="submit"
+            className="hover:cursor-pointer px-8 py-4 bg-[#00ff9d] text-black text-lg font-semibold rounded-xl hover:opacity-90 transition shadow-[0_0_25px_#00ff9d70]"
+          >
+            Register Interest for Global Launch
+          </button>
+        </form>
       </section>
 
       {/* FOOTER */}
@@ -168,27 +158,15 @@ export default function Home() {
         © {new Date().getFullYear()} HiddenHelper — Global Early Access
       </footer>
 
-      {/* MODAL FORM */}
-      {open && (
-        <Modal
-          email={email}
-          setEmail={setEmail}
-          price={price}
-          setPrice={setPrice}
-          currency={currency}
-          setCurrency={setCurrency}
-          message={message}
-          setOpen={setOpen}
-          handleSubmit={handleSubmit}
-        />
-      )}
+      {/* MODAL WRAPPER */}
+      {showModal && <ModalWrapper />}
     </div>
   );
 }
 
 /* --- COMPONENTS --- */
 
-function FeatureCard({ title, description, accent }: any) {
+function FeatureCard({ title, description, accent }: { title: string; description: string; accent: string }) {
   return (
     <div className="p-6 rounded-xl bg-white/5 border border-white/10">
       <h4
@@ -202,91 +180,10 @@ function FeatureCard({ title, description, accent }: any) {
   );
 }
 
-function UseCase({ title }: any) {
+function UseCase({ title }: { title: string }) {
   return (
     <div className="p-5 bg-white/5 border border-white/10 rounded-xl text-center">
       {title}
-    </div>
-  );
-}
-
-function Modal({
-  email,
-  setEmail,
-  price,
-  setPrice,
-  currency,
-  setCurrency,
-  message,
-  setOpen,
-  handleSubmit,
-}: any) {
-  return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
-      <div className="bg-[#0d1117] border border-white/10 rounded-xl w-full max-w-md p-6">
-        <h2 className="text-xl font-semibold mb-4 text-center">
-          Join the Early Access List
-        </h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm text-gray-300">Email</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full px-3 py-2 rounded-md bg-black/40 border border-white/10 text-white"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm text-gray-300">
-              What pricing feels fair to you?
-            </label>
-            <input
-              type="number"
-              required
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="mt-1 w-full px-3 py-2 rounded-md bg-black/40 border border-white/10 text-white"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm text-gray-300">Currency</label>
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              className="mt-1 w-full px-3 py-2 rounded-md bg-black/40 border border-white/10 text-white"
-            >
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-              <option value="INR">INR (₹)</option>
-              <option value="JPY">JPY (¥)</option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-3 bg-[#00ff9d] text-black font-semibold rounded-lg hover:opacity-90 transition"
-          >
-            Submit
-          </button>
-        </form>
-
-        {message && (
-          <p className="mt-4 text-sm text-center text-gray-300">{message}</p>
-        )}
-
-        <button
-          className="mt-4 text-gray-400 text-sm underline w-full text-center"
-          onClick={() => setOpen(false)}
-        >
-          Close
-        </button>
-      </div>
     </div>
   );
 }
