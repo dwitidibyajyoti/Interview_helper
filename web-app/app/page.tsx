@@ -13,8 +13,8 @@ export default async function Home({ searchParams }: HomePageProps) {
   return (
     <div className="min-h-screen bg-[#0d1117] text-white">
       {/* NAV */}
-      <header className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
-        <h1 className="text-xl font-semibold bg-gradient-to-r from-[#00ff9d] to-[#a78bfa] bg-clip-text text-transparent">
+      <header className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex justify-between items-center">
+        <h1 className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-[#00ff9d] to-[#a78bfa] bg-clip-text text-transparent">
           HiddenHelper
         </h1>
 
@@ -22,7 +22,7 @@ export default async function Home({ searchParams }: HomePageProps) {
           <input type="hidden" name="modal" value="true" />
           <button
             type="submit"
-            className="px-4 py-2 bg-[#00ff9d] text-black font-semibold rounded-lg hover:opacity-90 transition"
+            className="px-3 py-2 sm:px-4 sm:py-2 bg-[#00ff9d] text-black font-semibold rounded-lg hover:opacity-90 transition text-sm sm:text-base"
           >
             Register Interest
           </button>
@@ -30,15 +30,15 @@ export default async function Home({ searchParams }: HomePageProps) {
       </header>
 
       {/* HERO */}
-      <section className="max-w-6xl mx-auto px-6 pt-16 pb-10 text-center">
-        <h2 className="text-4xl md:text-6xl font-bold leading-tight">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 md:pt-16 pb-8 sm:pb-10 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-snug sm:leading-tight">
           Your AI Coding Assistant That Stays{" "}
-          <span className="bg-gradient-to-r from-[#00ff9d] to-[#a78bfa] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#00ff9d] to-[#a78bfa] bg-clip-text text-transparent block sm:inline">
             Invisible During Screen Share.
           </span>
         </h2>
 
-        <p className="mt-5 text-gray-400 max-w-3xl mx-auto text-lg">
+        <p className="mt-4 sm:mt-5 text-gray-400 max-w-3xl mx-auto text-base sm:text-lg px-2">
           HiddenHelper is a desktop AI assistant designed for developers who
           work in interviews, live coding sessions, client demos, pair
           programming, and public streams — moments where being caught using AI
@@ -49,23 +49,23 @@ export default async function Home({ searchParams }: HomePageProps) {
           <input type="hidden" name="modal" value="true" />
           <button
             type="submit"
-            className="hover:cursor-pointer mt-8 px-8 py-4 bg-[#00ff9d] text-black font-semibold text-lg rounded-xl hover:opacity-90 transition shadow-[0_0_20px_#00ff9d50] "
+            className="hover:cursor-pointer mt-6 sm:mt-8 px-6 py-3 sm:px-8 sm:py-4 bg-[#00ff9d] text-black font-semibold text-base sm:text-lg rounded-xl hover:opacity-90 transition shadow-[0_0_20px_#00ff9d50] w-full sm:w-auto"
           >
             Join Early Access
           </button>
         </form>
 
-        <p className="mt-3 text-sm text-gray-500">
+        <p className="mt-3 text-xs sm:text-sm text-gray-500 px-2">
           Global launch · Works on Windows, macOS & Linux
         </p>
       </section>
 
       {/* ABOUT THE PRODUCT */}
-      <section className="max-w-6xl mx-auto px-6 py-16 text-center">
-        <h3 className="text-3xl font-semibold mb-6">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
+        <h3 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6">
           What is HiddenHelper?
         </h3>
-        <p className="text-gray-400 max-w-4xl mx-auto leading-relaxed">
+        <p className="text-gray-400 max-w-4xl mx-auto leading-relaxed text-sm sm:text-base px-2 sm:px-0">
           HiddenHelper is a lightweight AI coding assistant that sits beside
           your editor (VS Code, JetBrains, Cursor, Neovim, terminal, etc.) and
           provides intelligent help — without ever appearing on screen share.
@@ -80,12 +80,12 @@ export default async function Home({ searchParams }: HomePageProps) {
       </section>
 
       {/* FEATURES */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <h3 className="text-3xl font-semibold text-center mb-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        <h3 className="text-2xl sm:text-3xl font-semibold text-center mb-8 sm:mb-12">
           Key Features Designed for Developers
         </h3>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           <FeatureCard
             title="Invisible During Screen Share"
             accent="#00ff9d"
@@ -125,12 +125,12 @@ export default async function Home({ searchParams }: HomePageProps) {
       </section>
 
       {/* USE CASES */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <h3 className="text-3xl font-semibold text-center mb-10">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+        <h3 className="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-10">
           Perfect For These Scenarios
         </h3>
 
-        <div className="grid md:grid-cols-3 gap-6 text-gray-300 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 text-gray-300 text-xs sm:text-sm">
           <UseCase title="Technical Interviews" />
           <UseCase title="Pair Programming" />
           <UseCase title="Live Coding Streams" />
@@ -141,12 +141,12 @@ export default async function Home({ searchParams }: HomePageProps) {
       </section>
 
       {/* CTA */}
-      <section className="py-16 text-center">
+      <section className="py-12 sm:py-16 text-center px-4">
         <form action="/" method="get">
           <input type="hidden" name="modal" value="true" />
           <button
             type="submit"
-            className="hover:cursor-pointer px-8 py-4 bg-[#00ff9d] text-black text-lg font-semibold rounded-xl hover:opacity-90 transition shadow-[0_0_25px_#00ff9d70]"
+            className="hover:cursor-pointer px-6 py-3 sm:px-8 sm:py-4 bg-[#00ff9d] text-black text-base sm:text-lg font-semibold rounded-xl hover:opacity-90 transition shadow-[0_0_25px_#00ff9d70] w-full sm:w-auto"
           >
             Register Interest for Global Launch
           </button>
@@ -154,7 +154,7 @@ export default async function Home({ searchParams }: HomePageProps) {
       </section>
 
       {/* FOOTER */}
-      <footer className="text-center py-6 text-sm text-gray-500 border-t border-white/10">
+      <footer className="text-center py-4 sm:py-6 text-xs sm:text-sm text-gray-500 border-t border-white/10 px-4">
         © {new Date().getFullYear()} HiddenHelper — Global Early Access
       </footer>
 
@@ -168,21 +168,21 @@ export default async function Home({ searchParams }: HomePageProps) {
 
 function FeatureCard({ title, description, accent }: { title: string; description: string; accent: string }) {
   return (
-    <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+    <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 h-full">
       <h4
-        className="text-lg font-semibold mb-2"
+        className="text-base sm:text-lg font-semibold mb-2"
         style={{ color: accent }}
       >
         {title}
       </h4>
-      <p className="text-sm text-gray-300">{description}</p>
+      <p className="text-xs sm:text-sm text-gray-300">{description}</p>
     </div>
   );
 }
 
 function UseCase({ title }: { title: string }) {
   return (
-    <div className="p-5 bg-white/5 border border-white/10 rounded-xl text-center">
+    <div className="p-4 sm:p-5 bg-white/5 border border-white/10 rounded-xl text-center h-full flex items-center justify-center">
       {title}
     </div>
   );
